@@ -1,45 +1,16 @@
-# COZY 커피 주문 앱 - 프론트엔드
+# React + Vite
 
-React + Vite + JavaScript 기반 UI.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-## 실행
+Currently, two official plugins are available:
 
-```bash
-# 의존성 설치 (최초 1회)
-npm install
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-# 개발 서버 (핫 리로드)
-npm run dev
-```
+## React Compiler
 
-개발 서버 기본 주소: http://localhost:5173
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-## 스크립트
+## Expanding the ESLint configuration
 
-| 명령어 | 설명 |
-|--------|------|
-| `npm run dev` | 개발 서버 실행 |
-| `npm run build` | 프로덕션 빌드 |
-| `npm run preview` | 빌드 결과물 로컬 미리보기 |
-| `npm run lint` | ESLint 실행 |
-
-## 기술 스택
-
-- **React** 19.x
-- **Vite** 7.x
-- **JavaScript** (바닐라 JS + JSX)
-
-## 폴더 구조
-
-```
-ui/
-├── public/
-├── src/
-│   ├── main.jsx    # 진입점
-│   ├── App.jsx     # 루트 컴포넌트
-│   ├── index.css   # 전역 스타일
-│   └── assets/
-├── index.html
-├── vite.config.js
-└── package.json
-```
+If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
