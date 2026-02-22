@@ -1,3 +1,4 @@
+// 배포 시 Render 환경 변수 VITE_API_URL 에 백엔드 URL 설정 (빌드 시점에 적용됨)
 const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:3000'
 
 async function request(path, options = {}) {

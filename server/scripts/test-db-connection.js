@@ -1,36 +1,19 @@
 /**
- * .env 기준으로 DB 연결 테스트
+ * .env 기준으로 DB 연결 테스트 (db.js와 동일한 설정 사용)
  * 사용: node scripts/test-db-connection.js
  */
 const path = require('path')
 require('dotenv').config({ path: path.join(__dirname, '..', '.env') })
-const { Client } = require('pg')
-
-const dbName = (process.env.DB_NAME || 'coffe_order').trim()
-
-const client = new Client({
-  host: (process.env.DB_HOST || 'localhost').trim(),
-  port: parseInt(process.env.DB_PORT || '5432', 10),
-  database: dbName,
-  user: (process.env.DB_USER || 'postgres').trim(),
-  password: (process.env.DB_PASSWORD || '').trim(),
-  ssl: false,
-  connectionTimeoutMillis: 10000,
-})
+const { testConnection } = require('../src/db')
 
 async function main() {
-  try {
-    await client.connect()
-    const res = await client.query('SELECT 1 as ok')
-    console.log('OK: Database connected to', dbName)
-    console.log('Result:', res.rows[0])
-  } catch (err) {
-    console.error('Connection failed:', err.message)
-    console.error('Code:', err.code)
-    console.error('Config: DB_HOST=%s DB_PORT=%s DB_NAME=%s DB_USER=%s', process.env.DB_HOST, process.env.DB_PORT, dbName, process.env.DB_USER)
+  const ok = await testConnection()
+  if (ok) {
+    console.log('OK: Database connected.')
+    process.exit(0)
+  } else {
+    console.error('Connection failed. Check .env (DATABASE_URL or DB_HOST, DB_PORT, DB_NAME, DB_USER, DB_PASSWORD)')
     process.exit(1)
-  } finally {
-    await client.end()
   }
 }
 

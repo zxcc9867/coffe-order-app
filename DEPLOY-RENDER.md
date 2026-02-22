@@ -55,9 +55,11 @@ node scripts/init-db.js
 
    - Render PostgreSQL를 같은 계정에서 만들었다면 **Internal Database URL** 사용
    - DB와 다른 서비스면 **External Database URL** 사용
+   - **`DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USER`, `DB_PASSWORD`는 넣지 않아도 됩니다.**  
+     Render가 주는 URL 한 줄(`postgresql://user:password@host/dbname`)에 호스트·포트·DB명·사용자·비밀번호가 모두 들어 있고, 서버(`db.js`)는 `DATABASE_URL`이 있으면 이 한 줄만으로 연결합니다. 로컬 `.env`처럼 나눠 쓸 필요 없습니다.
 
 5. **Create Web Service** 후 배포 완료될 때까지 대기
-6. 배포된 URL 확인 (예: `https://coffe-order-api.onrender.com`)
+6. 배포된 URL 확인 (예: `https://coffe-order-app-backend.onrender.com`)
 
 ---
 
@@ -77,7 +79,7 @@ node scripts/init-db.js
 
    | Key              | Value                                  |
    |------------------|----------------------------------------|
-   | `VITE_API_URL`    | `https://coffe-order-api.onrender.com` |
+   | `VITE_API_URL`    | `https://coffe-order-app-backend.onrender.com` |
 
    ⚠️ 반드시 **2단계 백엔드 URL**을 그대로 넣어야 합니다. (마지막 `/` 제거)
 

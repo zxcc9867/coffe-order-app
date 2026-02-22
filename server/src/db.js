@@ -1,14 +1,16 @@
 const { Pool } = require('pg')
 
 const dbName = (process.env.DB_NAME || 'coffe_order').trim()
+const dbHost = (process.env.DB_HOST || 'localhost').trim()
+const connectionUrl = process.env.DATABASE_URL || (dbHost.startsWith('postgres://') || dbHost.startsWith('postgresql://') ? dbHost : null)
 
-const config = process.env.DATABASE_URL
+const config = connectionUrl
   ? {
-      connectionString: process.env.DATABASE_URL,
-      ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false,
+      connectionString: connectionUrl,
+      ssl: { rejectUnauthorized: false },
     }
   : {
-      host: (process.env.DB_HOST || 'localhost').trim(),
+      host: dbHost,
       port: parseInt(process.env.DB_PORT || '5432', 10),
       database: dbName,
       user: (process.env.DB_USER || 'postgres').trim(),
