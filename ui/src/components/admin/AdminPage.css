@@ -1,0 +1,9 @@
+.admin-page {
+  padding: 0 0 2rem;
+  min-height: 280px;
+  text-align: left;
+}
+.admin-page__loading, .admin-page__error { margin: 1rem 0; color: #6b7280; font-size: 1rem; }
+.admin-page__error { color: #b91c1c; }
+.admin-page__retry { margin-top: 0.5rem; padding: 0.5rem 1rem; font-size: 0.9rem; color: #2563eb; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 6px; cursor: pointer; }
+.admin-page__retry:hover { background: #dbeafe; }

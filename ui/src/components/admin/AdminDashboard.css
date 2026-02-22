@@ -1,0 +1,11 @@
+.admin-dashboard { margin-bottom: 1.5rem; }
+.admin-dashboard__title { margin: 0 0 1rem; font-size: 1.25rem; font-weight: 600; color: #111827; }
+.admin-dashboard__grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+.admin-dashboard__card {
+  padding: 1rem 1.25rem; background: #fff; border: 1px solid #e5e7eb; border-radius: 8px;
+  display: flex; flex-direction: column; gap: 0.35rem; transition: border-color 0.2s, box-shadow 0.2s;
+}
+.admin-dashboard__card:hover { border-color: #bfdbfe; box-shadow: 0 2px 8px rgba(37, 99, 235, 0.08); }
+.admin-dashboard__card-label { font-size: 0.875rem; font-weight: 500; color: #6b7280; }
+.admin-dashboard__card-value { font-size: 1.5rem; font-weight: 700; color: #2563eb; line-height: 1.2; }
+@media (max-width: 640px) { .admin-dashboard__grid { grid-template-columns: repeat(2, 1fr); } }

@@ -1,0 +1,5 @@
+.order-page { padding: 1.5rem; max-width: 1200px; margin: 0 auto; }
+.order-page__menu-title { margin: 0 0 1rem; font-size: 1.25rem; font-weight: 600; color: #111827; }
+.order-page__menu-grid { display: flex; flex-wrap: wrap; gap: 1.25rem; }
+.order-page__loading, .order-page__error { padding: 2rem; text-align: center; color: #6b7280; }
+.order-page__error { color: #b91c1c; }

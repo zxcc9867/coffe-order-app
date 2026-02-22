@@ -1,10 +1,24 @@
 const express = require('express')
 const { testConnection } = require('./db')
+const menusRouter = require('./routes/menus')
+const ordersRouter = require('./routes/orders')
+const stockRouter = require('./routes/stock')
 
 const app = express()
 
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*')
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, OPTIONS')
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type')
+  if (req.method === 'OPTIONS') return res.sendStatus(200)
+  next()
+})
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
+
+app.use('/api/menus', menusRouter)
+app.use('/api/orders', ordersRouter)
+app.use('/api/stock', stockRouter)
 
 app.get('/', (req, res) => {
   res.type('html').send(`
