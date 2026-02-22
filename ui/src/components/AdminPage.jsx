@@ -9,6 +9,7 @@ export default function AdminPage({
   stock,
   onUpdateStock,
   onStartMaking,
+  onCompleteOrder,
 }) {
   const total = orders.length
   const received = orders.filter((o) => o.status === ORDER_STATUS.received).length
@@ -38,7 +39,11 @@ export default function AdminPage({
         onIncrease={handleIncrease}
         onDecrease={handleDecrease}
       />
-      <AdminOrderList orders={orders} onStartMaking={onStartMaking} />
+      <AdminOrderList
+        orders={orders}
+        onStartMaking={onStartMaking}
+        onCompleteOrder={onCompleteOrder}
+      />
     </main>
   )
 }

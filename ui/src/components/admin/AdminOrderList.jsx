@@ -1,18 +1,6 @@
 import { ORDER_STATUS_LABEL } from '../../data/admin'
+import { formatPrice, formatOrderDate } from '../../utils/format'
 import './AdminOrderList.css'
-
-function formatDate(d) {
-  const date = d instanceof Date ? d : new Date(d)
-  const m = date.getMonth() + 1
-  const day = date.getDate()
-  const h = date.getHours()
-  const min = String(date.getMinutes()).padStart(2, '0')
-  return `${m}월 ${day}일 ${h}:${min}`
-}
-
-function formatPrice(n) {
-  return n.toLocaleString('ko-KR') + '원'
-}
 
 function formatOrderItems(items) {
   return items
@@ -23,7 +11,7 @@ function formatOrderItems(items) {
     .join(', ')
 }
 
-export default function AdminOrderList({ orders, onStartMaking }) {
+export default function AdminOrderList({ orders, onStartMaking, onCompleteOrder }) {
   const sortedOrders = [...orders].sort(
     (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
   )
@@ -39,10 +27,10 @@ export default function AdminOrderList({ orders, onStartMaking }) {
             <li key={order.id} className="admin-orders__item">
               <div className="admin-orders__item-main">
                 <span className="admin-orders__item-date">
-                  {formatDate(order.createdAt)}
+                  {formatOrderDate(order.createdAt)}
                 </span>
                 <span className="admin-orders__item-menus">
-                  {formatOrderItems(order.items)}
+                  {formatOrderItems(order.items ?? [])}
                 </span>
                 <span className="admin-orders__item-price">
                   {formatPrice(order.total)}
@@ -58,6 +46,15 @@ export default function AdminOrderList({ orders, onStartMaking }) {
                   onClick={() => onStartMaking(order.id)}
                 >
                   제조 시작
+                </button>
+              )}
+              {order.status === 'making' && onCompleteOrder && (
+                <button
+                  type="button"
+                  className="admin-orders__btn admin-orders__btn--complete"
+                  onClick={() => onCompleteOrder(order.id)}
+                >
+                  제조 완료
                 </button>
               )}
             </li>

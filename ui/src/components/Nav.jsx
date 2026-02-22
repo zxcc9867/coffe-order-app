@@ -9,6 +9,7 @@ export default function Nav({ currentView, onNavigate }) {
           type="button"
           className={`nav-tab ${currentView === 'order' ? 'nav-tab--active' : ''}`}
           onClick={() => onNavigate('order')}
+          aria-current={currentView === 'order' ? 'page' : undefined}
         >
           주문하기
         </button>
@@ -16,6 +17,7 @@ export default function Nav({ currentView, onNavigate }) {
           type="button"
           className={`nav-tab ${currentView === 'admin' ? 'nav-tab--active' : ''}`}
           onClick={() => onNavigate('admin')}
+          aria-current={currentView === 'admin' ? 'page' : undefined}
         >
           관리자
         </button>

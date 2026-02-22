@@ -49,6 +49,14 @@ function App() {
     )
   }, [])
 
+  const onCompleteOrder = useCallback((orderId) => {
+    setOrders((prev) =>
+      prev.map((o) =>
+        o.id === orderId ? { ...o, status: ORDER_STATUS.done } : o
+      )
+    )
+  }, [])
+
   return (
     <div className="app">
       <Nav currentView={view} onNavigate={setView} />
@@ -59,6 +67,7 @@ function App() {
           stock={stock}
           onUpdateStock={onUpdateStock}
           onStartMaking={onStartMaking}
+          onCompleteOrder={onCompleteOrder}
         />
       )}
     </div>

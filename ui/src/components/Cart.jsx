@@ -1,8 +1,5 @@
+import { formatPrice } from '../utils/format'
 import './Cart.css'
-
-function formatPrice(n) {
-  return n.toLocaleString('ko-KR') + '원'
-}
 
 export default function Cart({ items, onOrder }) {
   const total = items.reduce((sum, it) => sum + it.unitPrice * it.quantity, 0)
@@ -19,7 +16,7 @@ export default function Cart({ items, onOrder }) {
               <li key={it.cartId} className="cart__item">
                 <span className="cart__item-label">
                   {it.name}
-                  {it.optionLabels.length > 0 && ` (${it.optionLabels.join(', ')})`} X {it.quantity}
+                  {it.optionLabels?.length > 0 && ` (${it.optionLabels.join(', ')})`} X {it.quantity}
                 </span>
                 <span className="cart__item-price">
                   {formatPrice(it.unitPrice * it.quantity)}

@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { formatPrice } from '../utils/format'
 import './MenuCard.css'
 
 const MIN_QTY = 1
@@ -47,7 +48,7 @@ export default function MenuCard({ item, onAddToCart }) {
       </div>
       <h3 className="menu-card__name">{item.name}</h3>
       <p className="menu-card__price">
-        {item.basePrice.toLocaleString('ko-KR')}원
+        {formatPrice(item.basePrice)}
       </p>
       <p className="menu-card__desc">{item.description}</p>
       <div className="menu-card__options">
@@ -59,7 +60,7 @@ export default function MenuCard({ item, onAddToCart }) {
               onChange={() => toggleOption(opt.id)}
             />
             <span>
-              {opt.label} ({opt.addPrice > 0 ? `+${opt.addPrice.toLocaleString('ko-KR')}원` : '+0원'})
+              {opt.label} ({opt.addPrice > 0 ? `+${formatPrice(opt.addPrice)}` : '+0원'})
             </span>
           </label>
         ))}

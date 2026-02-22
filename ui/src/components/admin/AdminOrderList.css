@@ -92,3 +92,11 @@
 .admin-orders__btn:hover {
   background: #1d4ed8;
 }
+
+.admin-orders__btn--complete {
+  background: #059669;
+}
+
+.admin-orders__btn--complete:hover {
+  background: #047857;
+}
