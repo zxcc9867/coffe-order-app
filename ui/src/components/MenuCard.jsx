@@ -4,6 +4,7 @@ import './MenuCard.css'
 
 export default function MenuCard({ item, onAddToCart }) {
   const [selectedOptionIds, setSelectedOptionIds] = useState([])
+  const [imgError, setImgError] = useState(false)
 
   const toggleOption = (optionId) => {
     setSelectedOptionIds((prev) =>
@@ -25,10 +26,16 @@ export default function MenuCard({ item, onAddToCart }) {
     })
   }
 
+  const imageSrc = `/images/${item.id}.png`
+
   return (
     <article className="menu-card">
       <div className="menu-card__image" aria-hidden>
-        <span className="menu-card__image-placeholder">이미지</span>
+        {imgError ? (
+          <span className="menu-card__image-placeholder">이미지</span>
+        ) : (
+          <img src={imageSrc} alt="" className="menu-card__img" onError={() => setImgError(true)} />
+        )}
       </div>
       <h3 className="menu-card__name">{item.name}</h3>
       <p className="menu-card__price">{formatPrice(item.basePrice)}</p>
