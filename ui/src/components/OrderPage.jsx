@@ -10,7 +10,7 @@ function makeCartKey(name, optionLabels) {
   return name + '|' + optionLabels.slice().sort().join(',')
 }
 
-export default function OrderPage() {
+export default function OrderPage({ onPlaceOrder }) {
   const [cartRows, setCartRows] = useState([])
 
   const addToCart = (payload) => {
@@ -45,8 +45,11 @@ export default function OrderPage() {
 
   const handleOrder = () => {
     if (cartRows.length === 0) return
-    alert('주문이 접수되었습니다. (백엔드 연동 전)')
+    if (typeof onPlaceOrder === 'function') {
+      onPlaceOrder(cartRows)
+    }
     setCartRows([])
+    alert('주문이 접수되었습니다.')
   }
 
   return (
