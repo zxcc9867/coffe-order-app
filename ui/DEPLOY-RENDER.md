@@ -108,8 +108,9 @@ VITE_API_URL=https://실제백엔드URL.onrender.com
 
 | 증상 | 확인할 것 |
 |------|------------|
+| **EINVALIDTAGNAME / Invalid tag name "$" of package "$"** | **Build Command** 를 정확히 `npm install && npm run build` 로만 두기. `$`, `Menu` 등이 앞뒤에 붙어 있으면 제거. **Environment Variables** 에 Key가 `$` 또는 `Menu` 인 항목이 있으면 삭제. 그다음 **Clear build cache** 후 재배포. |
 | 메뉴/주문/재고가 안 나옴 | `VITE_API_URL` 이 백엔드 URL과 일치하는지, **다시 빌드** 했는지 확인 (환경 변수 변경 후 재배포 필요) |
 | 빌드 실패 (Cannot find package.json) | **Root Directory** 를 `ui` 로 설정했는지 확인 |
 | 404 / 빈 화면 | **Publish Directory** 가 `dist` 인지 확인 |
-
 이 문서는 `ui` 폴더 기준입니다. DB·백엔드 전체 배포는 루트의 **DEPLOY-RENDER.md** 를 참고하세요.
+
