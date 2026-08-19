@@ -1,125 +1,129 @@
-# COZY 커피 주문 앱
+# COZY Coffee Order
 
-고객이 메뉴를 보고 주문하고, 관리자가 주문·재고를 처리하는 **[커피 주문 웹 앱](https://coffe-order-app-frontend.onrender.com/)**입니다.
+[English](README.md) | [한국어](README.ko.md) | [日本語](README.ja.md)
 
+A full-stack coffee ordering web application where customers build an order and staff manage order progress and inventory from an operations dashboard.
 
+[Open the live application](https://coffe-order-app-frontend.onrender.com/)
 
----
+## Why this project
 
-## 이 앱으로 할 수 있는 것
+COZY connects customer choices, order state transitions, inventory updates, operational statistics, a REST API, and a relational database in one deployable store workflow.
 
-| 대상 | 기능 |
-|------|------|
-| **고객 (주문하기)** | 메뉴 보기 → 옵션 선택 → 장바구니에 담기 → 수량 조절 → 주문하기 → 완료 알림 |
-| **관리자** | 주문 현황 보기, 제조 시작/제조 완료 처리, 재고 현황 보기·수량 조절 |
+## Product flow
 
----
+| User | Flow |
+| --- | --- |
+| Customer | Browse menus → choose options → add to cart → adjust quantities → place an order |
+| Staff | Review orders → start preparation → complete orders → inspect and adjust stock |
+| Operator | Monitor total, received, preparing, and completed order counts |
 
-## 화면 구성
+## Core capabilities
 
-- **주문하기**: 메뉴 카드(이미지·가격·옵션), 장바구니(수량 ±), 주문하기 버튼, 완료 토스트
-- **관리자**: 대시보드(총 주문/접수/제조 중/완료), 재고 현황(± 버튼·새로고침), 주문 목록(제조 시작·제조 완료)
+- Menu cards with images, prices, and configurable options
+- Cart quantity controls and order confirmation feedback
+- Received, preparing, and completed order states
+- Dashboard statistics derived from current orders
+- Inventory visibility, manual adjustments, and workflow-linked stock deduction
+- API process and PostgreSQL health endpoints
+- Responsive customer and administration views
 
----
+## Technology
 
-## 기술 스택
+| Layer | Technology |
+| --- | --- |
+| Frontend | React 19, Vite 7 |
+| Backend | Node.js 18+, Express 4 |
+| Database | PostgreSQL |
+| Deployment | Render |
 
-| 구분 | 기술 |
-|------|------|
-| **프론트엔드** | React, Vite |
-| **백엔드** | Node.js, Express |
-| **DB** | PostgreSQL |
-| **배포** | Render.com (가이드: [DEPLOY-RENDER.md](./DEPLOY-RENDER.md)) |
+## Architecture
 
----
-
-## 프로젝트 구조
-
-```
-coffe-order/
-├── ui/                 # 프론트엔드 (React + Vite)
-│   ├── public/images/  # 메뉴 이미지
-│   ├── src/
-│   │   ├── api.js      # 백엔드 API 호출
-│   │   ├── App.jsx
-│   │   ├── components/ # 주문 화면, 장바구니, 관리자 컴포넌트
-│   │   └── ...
-│   └── package.json
-├── server/             # 백엔드 (Express)
-│   ├── src/
-│   │   ├── index.js    # 서버 진입점
-│   │   ├── app.js      # 라우트·CORS
-│   │   ├── db.js       # PostgreSQL 연결
-│   │   └── routes/     # /api/menus, /api/orders, /api/stock
-│   ├── scripts/
-│   │   └── init-db.js  # 테이블 생성 + 시드(메뉴·재고)
-│   └── package.json
-├── DEPLOY-RENDER.md    # Render 배포 순서·설정
-├── PRD-화면.md         # 화면 기획
-└── README.md           # 이 파일
+```text
+React client (ui)
+  └─ REST via VITE_API_URL
+       └─ Express API (server)
+            ├─ /api/menus
+            ├─ /api/orders
+            ├─ /api/stock
+            └─ PostgreSQL
 ```
 
----
-
-## 로컬에서 실행하기
-
-### 1. 데이터베이스 준비
-
-PostgreSQL에서 DB 생성:
-
-```sql
-CREATE DATABASE coffe_order;
+```text
+coffe-order-app/
+├── ui/
+│   ├── public/images/
+│   └── src/
+├── server/
+│   ├── scripts/init-db.js
+│   └── src/
+├── DEPLOY-RENDER.md
+└── PRD-화면.md
 ```
 
-### 2. 백엔드
+## Run locally
+
+Create PostgreSQL database `coffe_order`, then start the API:
 
 ```bash
 cd server
-cp .env.example .env   # .env에 DB 비밀번호 등 입력
+cp .env.example .env
 npm install
-node scripts/init-db.js   # 테이블 + 시드 (최초 1회)
+node scripts/init-db.js
 npm run dev
 ```
 
-→ **http://localhost:3000** 에서 API 동작
-
-### 3. 프론트엔드
+Start the web client in another terminal:
 
 ```bash
 cd ui
+cp .env.example .env
 npm install
 npm run dev
 ```
 
-→ **http://localhost:5173** 에서 앱 접속 (주문하기 / 관리자 탭)
+The API listens on [http://localhost:3000](http://localhost:3000), and the client runs at [http://localhost:5173](http://localhost:5173).
 
----
+## Environment variables
 
-## 환경 변수 요약
+| Location | Variable | Purpose |
+| --- | --- | --- |
+| `server` | `PORT` | Express port; defaults to `3000` |
+| `server` | `DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USER`, `DB_PASSWORD` | Local PostgreSQL connection |
+| `server` | `DATABASE_URL` | Hosted PostgreSQL connection string |
+| `ui` | `VITE_API_URL` | Public base URL of the Express API |
 
-| 위치 | 변수 | 설명 |
-|------|------|------|
-| **server** | `PORT` | 서버 포트 (기본 3000) |
-| **server** | `DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USER`, `DB_PASSWORD` | PostgreSQL 연결 (로컬) |
-| **server** | `DATABASE_URL` | 한 줄 연결 문자열 (Render 등 배포 시 사용) |
-| **ui** (빌드 시) | `VITE_API_URL` | 백엔드 API 주소 (배포 시 필수, 예: `https://xxx.onrender.com`) |
+Do not commit real database credentials or local `.env` files.
 
----
+## API overview
 
-## API 개요
+| Method | Path | Responsibility |
+| --- | --- | --- |
+| GET | `/api/health`, `/api/health/db` | Process and database health |
+| GET | `/api/menus` | List menus |
+| GET, POST | `/api/orders` | List and create orders |
+| GET | `/api/orders/stats` | Return order status totals |
+| PATCH | `/api/orders/:id` | Change order state and apply stock logic |
+| GET, PATCH | `/api/stock` | Read and adjust inventory |
 
-| 메서드 | 경로 | 설명 |
-|--------|------|------|
-| GET | `/api/menus` | 메뉴 목록 |
-| GET | `/api/orders` | 주문 목록 |
-| GET | `/api/orders/stats` | 주문 통계 (총/접수/제조중/완료) |
-| POST | `/api/orders` | 주문 생성 |
-| PATCH | `/api/orders/:id` | 주문 상태 변경 (제조 시작/완료 시 재고 차감) |
-| GET | `/api/stock` | 재고 조회 |
-| PATCH | `/api/stock` | 재고 수정 |
+## Verification
 
----
+```bash
+cd ui
+npm run lint
+npm run build
+```
 
-## 라이선스
+Start the backend and check both health endpoints. Then place a customer order and confirm that the staff dashboard, statistics, state transition, and inventory remain consistent.
+
+## Deployment
+
+The frontend and backend are separate Render services with PostgreSQL as the data layer. See [DEPLOY-RENDER.md](DEPLOY-RENDER.md).
+
+## Current scope and security
+
+This is a portfolio and learning project. The administration view and write endpoints currently have no authentication or role-based authorization. Before production use, add staff authentication, endpoint authorization, restrictive CORS, request validation, rate limiting, audit logging, and stronger transactional inventory controls.
+
+## License
 
 ISC
